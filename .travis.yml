@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t jwhelland/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run jwhelland/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t jwhelland/multi-client ./client
+  - docker build -t jwhelland/multi-nginx ./nginx
+  - docker build -t jwhelland/multi-server ./server
+  - docker build -t jwhelland/multi-worker ./worker
+  # login to docker cli
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --passwd-stdin
+  # push images to docker hub
+  - docker push jwhelland/multi-client
+  - docker push jwhelland/multi-nginx
+  - docker push jwhelland/multi-server
+  - docker push jwhelland/multi-worker
