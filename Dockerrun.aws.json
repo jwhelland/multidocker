@@ -5,24 +5,28 @@
       "name": "client",
       "image": "jwhelland/multi-client",
       "hostname": "client",
+      "memory": 128,
       "essential": false
     },
     {
       "name": "worker",
       "image": "jwhelland/multi-worker",
       "hostname": "worker",
+      "memory": 128,
       "essential": false
     },
     {
       "name": "server",
       "image": "jwhelland/multi-server",
       "hostname": "api",
+      "memory": 128,
       "essential": false
     },
     {
       "name": "nginx",
       "image": "jwhelland/multi-nginx",
       "essential": true,
+      "memory": 128,
       "portMappings": [
         {
           "hostPort": 80,
